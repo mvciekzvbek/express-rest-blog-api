@@ -1,24 +1,22 @@
 version: "3"
 services:
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: example
+  mongo:
+    image: mongo:latest
+    container_name: "mongo"
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ./data/db:/data/db
     ports:
-      - 8001:80
+        - 27017:27017
   app:
     image: "node:10"
-    depends_on:
-    - db
+    container_name: express-rest
+    restart: always
+    build: .
     working_dir: /home/node/app
     volumes:
       - ./:/home/node/app
     environment:
       NODE_ENV: development
     ports:
-      - 8000:80
+      - 3000:3000
     command: npm run dev
