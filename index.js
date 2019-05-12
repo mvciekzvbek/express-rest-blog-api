@@ -1,7 +1,9 @@
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb'
 import 'dotenv/config';
+import routes from './routes';
 
 var db;
 
@@ -29,11 +31,12 @@ MongoClient.connect(process.env.DB_HOST, { useNewUrlParser: true }, (err, client
 
 
 const app = express();
+
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-
 //routes
-app.get("/", (req, res) => {
-    res.send("Ready");
-});
+app.use('/session', routes.session);
+app.use('/users', routes.users);
+app.use('/articles', routes.articles);

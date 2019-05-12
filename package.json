@@ -20,6 +20,7 @@
   "homepage": "https://github.com/mvciekzvbek/express-rest#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "mongodb": "^3.2.3"
