@@ -24,8 +24,18 @@ const get = () => mongo;
 
 const close = () => mongo.close()
 
+const getNextSequence = async (name) => {
+    const ret = await mongo.collection('counters').findOneAndUpdate(
+        { _id: name },
+        { $inc: { seq: 1 } },
+        { returnOriginal: false },
+    )
+    return ret.value.seq;
+ }
+
 export default {
     connect,
     get,
-    close
+    close,
+    getNextSequence
 }
