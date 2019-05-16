@@ -26,8 +26,3 @@ db.connect(() => {
         console.log("Started at http://localhost:%d\n", server.address().port);
     });
 })
-
-//routes
-app.use('/api/v1/session', routes.session);
-app.use('/api/v1/users', routes.users);
-app.use('/api/v1/articles', routes.articles);
