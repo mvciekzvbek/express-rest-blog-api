@@ -25,8 +25,6 @@ db.connect(() => {
     
         console.log("Started at http://localhost:%d\n", server.address().port);
     });
-
-    console.log(db);
 })
 
 //routes

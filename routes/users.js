@@ -13,13 +13,15 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const id = parseInt(req.query.id, 10)
-    const users = await db.get().collection('users')
-        .find()
-        .sort({_id: -1})
-        .toArray()
+    const id = parseInt(req.params.id, 10)
+    const user = await db.get().collection('users')
+        .findOne({_id: id})
 
-    return res.status(200).send(users);
+    return res.status(200).send(user);
+})
+
+router.post('/', async( req, res) => {
+
 })
 
 router.post('/fake', async (req,res) => {
@@ -37,7 +39,7 @@ router.post('/fake', async (req,res) => {
         githubToken: r.login.sha1
     }))
 
-    await db.get().collection('users').insert(users[0]);
+    await db.get().collection('users').insertOne(users[0]);
 
     let newUsers = await db.get().collection('users')
         .find()
@@ -47,5 +49,32 @@ router.post('/fake', async (req,res) => {
     
     res.status(201).send(newUsers);
 })
+
+router.put('/:id', async (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const newValues = { $set: req.body }
+
+    const updatedUser = await db.get().collection('users')
+        .updateOne(
+            { _id: id },
+            newValues
+        )
+    
+    if (updatedUser.matchedCount) {
+        return res.status(200)
+    }   
+})
+
+router.delete('/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+
+    db.get().collection('users')
+        .deleteOne({_id: id}, (err, user) => {
+            if (!user.deletedCount) {
+                return res.sendStatus(404);
+            } 
+            res.sendStatus(204);
+        })
+});
 
 export default router;
