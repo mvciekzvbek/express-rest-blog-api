@@ -42,4 +42,47 @@ export default {
 
         return res.status(200).send({articles, count});
     },
+
+    async findOne(req, res, next) {
+        const id = parseInt(req.params.id, 10)
+        const article = await db.get().collection('articles')
+            .findOne({_id: id})
+
+        if (!article) {
+            return next();
+        }
+    
+        return res.status(200).send(article);
+    },
+
+    async update(req, res, next) {
+        const id = parseInt(req.params.id, 10);
+        const newValues = { $set: req.body }
+
+        const updatedArticle = await db.get().collection('articles')
+            .updateOne(
+                { _id: id },
+                newValues
+            )
+
+        if (!updatedArticle) {
+            return next();
+        }
+
+        if (updatedArticle.matchedCount) {
+            return res.sendStatus(200);
+        }   
+    },
+
+    async remove (req, res, next) {
+        const id = parseInt(req.params.id, 10);
+    
+        db.get().collection('articles')
+            .deleteOne({_id: id}, (err, article) => {
+                if (!article.deletedCount) {
+                    return next();
+                } 
+                return res.sendStatus(204);
+            })
+    }
 }
