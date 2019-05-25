@@ -22,7 +22,6 @@ export default {
             code
         });
         
-
         if (message) {
             throw new Error (message);
         }
