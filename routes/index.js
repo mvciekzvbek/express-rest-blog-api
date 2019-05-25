@@ -1,9 +1,9 @@
 import articles from './articles';
 import users from './users';
-import session from './session';
+import auth from './auth';
 
 export default {
     articles,
     users,
-    session
+    auth
 }
