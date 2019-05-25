@@ -24,8 +24,9 @@ export default {
         
         if (message) {
             throw new Error (message);
+            return next();
         }
-
+        
         let latestUserInfo = {
             name,
             githubLogin: login,
@@ -33,10 +34,28 @@ export default {
             avatar: avatar_url
         }
 
-        const { ops:[user], result } = await db.get()
+        const result = await db.get()
             .collection('users')
-            .replaceOne({githubLogin: login}, latestUserInfo, {upsert: true})
+            .findOne({name: latestUserInfo.name});
 
-        return { user, token: access_token }
+        let usr;
+
+        if (result) {
+            const { ops:[user] } = await db.get()
+                .collection('users')
+                .replaceOne({githubLogin: login}, latestUserInfo, {upsert: true})
+            usr = user;
+        } else {
+            const id = await db.getNextSequence("userid");
+            latestUserInfo = {
+                _id: id,
+                ...latestUserInfo
+            }
+
+            const { ops:[user] } = await db.get().collection('users').insertOne(latestUserInfo);
+            usr = user;
+        }
+
+        res.status(200).send({ user: usr, token: access_token });
     }
 }

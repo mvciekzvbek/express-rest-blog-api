@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 const requestGithubToken = credentials => {
     console.log('requestGithubToken');
 
+    console.log(credentials);
+
     return fetch(
         'https://github.com/login/oauth/access_token',
         {
@@ -14,6 +16,7 @@ const requestGithubToken = credentials => {
             body: JSON.stringify(credentials)
         }
     ).then(res => {
+        console.log('response');
         console.log(res);
         return res.json();
     })
