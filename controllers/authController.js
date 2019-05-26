@@ -2,14 +2,9 @@ import 'dotenv/config';
 import db from '../utils/db';
 import { authorizeWithGithub } from '../utils/auth';
 
-console.log(authorizeWithGithub);
-
-
 export default {
     async githubAuth (req, res, next) {
-        console.log('githubAuth');
         const code = req.headers.code;
-        console.log(code);
         let {
             message,
             access_token,

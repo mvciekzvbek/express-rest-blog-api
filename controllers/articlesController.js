@@ -3,10 +3,16 @@ import db from '../utils/db';
 export default {
     async create (req, res, next) {
         const id = await db.getNextSequence("articleid");
+        const currentUser = req.user;
+
+        if (!currentUser) {
+            return res.sendStatus(403);
+        }
 
         const article = {
             ...req.body,
             "_id": id,
+            "userID": currentUser._id,
             "created": Date.now()
         }
 

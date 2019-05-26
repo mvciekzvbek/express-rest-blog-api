@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-// import { MongoClient } from 'mongodb'
-// import 'dotenv/config';
 import routes from './routes';
 import db from './utils/db'
 

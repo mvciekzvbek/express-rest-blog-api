@@ -7,11 +7,7 @@ router.get('/', catchAsync(usersController.findAll));
 
 router.get('/:id', catchAsync(usersController.findOne));
 
-router.get('/:id/articles', (res, req) => {
-})
-
-router.post('/', async (req, res) => {
-})
+router.get('/:id/articles', catchAsync(usersController.findUserArticles))
 
 router.post('/fake', catchAsync(usersController.generateFake));
 

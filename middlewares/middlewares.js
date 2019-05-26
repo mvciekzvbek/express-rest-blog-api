@@ -1,3 +1,5 @@
+import db from '../utils/db';
+
 export function catchAsync(fn) {
     return (req, res, next) => {
         fn(req, res, next).catch(err => next(err));
@@ -15,4 +17,15 @@ export function catchErrors(err, req, res, next) {
     res.render('error', {
         message: err.message
     });
+}
+
+export async function isAuthenticated(req, res, next) {
+    const githubToken = req ? req.headers.token : '';
+
+    const currentUser = await db.get()
+        .collection('users')
+        .findOne({githubToken});
+
+    req.user = currentUser;
+    return next();
 }

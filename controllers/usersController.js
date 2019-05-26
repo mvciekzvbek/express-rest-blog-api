@@ -32,8 +32,18 @@ export default {
         if (!user) {
             return next();
         }
-    
-        return res.status(200).send(user);
+
+        const articles = await db.get().collection('articles')
+        .find({"userID": id})
+        .sort({_id: -1})
+        .toArray()
+
+        const userWithArtilces = {
+            ...user,
+            articles
+        }
+
+        return res.status(200).send(userWithArtilces);
     },
 
     async generateFake(req, res, next) {
@@ -91,5 +101,20 @@ export default {
                 } 
                 return res.sendStatus(204);
             })
+    },
+
+    async findUserArticles (req, res, next) {
+        const id = parseInt(req.params.id, 10);
+
+        const articles = await db.get().collection('articles')
+            .find({"userID": id})
+            .sort({_id: -1})
+            .toArray()
+
+        if (!articles) {
+            return next();
+        }
+        
+        return res.status(200).send(articles);
     }
 }
