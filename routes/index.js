@@ -1,9 +1,13 @@
 import articles from './articles';
 import users from './users';
-import auth from './auth';
+import categories from './categories';
+import session from './session';
+import comments from './comments';
 
 export default {
     articles,
     users,
-    auth
+    session,
+    categories,
+    comments
 }

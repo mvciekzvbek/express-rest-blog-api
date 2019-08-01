@@ -1,19 +1,36 @@
 import db from '../utils/db';
+import prepareFilter from '../utils/filter';
 
 export default {
     async create (req, res, next) {
         const id = await db.getNextSequence("articleid");
         const currentUser = req.user;
 
+        const categoriesNames = req.body.categories;
+        let categoriesIds = [];
+    
+        for (let name of categoriesNames) {
+            const category = await db.get()
+                .collection('categories')
+                .findOne({name: name});
+    
+            categoriesIds.push(category["_id"])
+        }
+    
+        let body = req.body;
+        delete body.categories;
+
         if (!currentUser) {
             return res.sendStatus(403);
         }
 
         const article = {
-            ...req.body,
+            ...body,
             "_id": id,
-            "userID": currentUser._id,
-            "created": Date.now()
+            "author_name": currentUser.githubLogin,
+            "created": Date.now(),
+            "categories_ids": categoriesIds
+
         }
 
         await db.get().collection('articles').insertOne(article);
@@ -28,13 +45,17 @@ export default {
     },
 
     async findAll(req, res, next) {
-        const offset = parseInt(req.query.offset) || 0;
-        const perPage = parseInt(req.query.count) || 10;
+        let { start, first } = req.query;
+        
+        start = parseInt(start) || 0;
+        first = parseInt(first) || 6;
 
+        const filter = prepareFilter(req.query);
+        
         const articlesPromise = db.get().collection('articles')
             .find()
-            .skip(offset)
-            .limit(perPage)
+            .skip(start)
+            .limit(first)
             .sort({_id: -1})
             .toArray()
 
@@ -43,7 +64,7 @@ export default {
         const [ articles, count ] = await Promise.all([articlesPromise, countPromise]);
 
         if (!articles) {
-            return next();
+            return res.status(404).send({"error": "Not found"})
         }
 
         return res.status(200).send({articles, count});
@@ -55,7 +76,7 @@ export default {
             .findOne({_id: id})
 
         if (!article) {
-            return next();
+            return res.status(404).send({"error": "Not found"})
         }
     
         return res.status(200).send(article);

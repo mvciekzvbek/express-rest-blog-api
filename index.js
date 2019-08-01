@@ -11,9 +11,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //routes
-app.use('/api/v1/auth', routes.auth);
+app.use('/api/v1/session', routes.session);
 app.use('/api/v1/users', routes.users);
 app.use('/api/v1/articles', routes.articles);
+app.use('/api/v1/categories', routes.categories);
+app.use('/api/v1/comments', routes.comments);
 
 db.connect(() => {
     const server = app.listen(process.env.PORT || 3000, err => {

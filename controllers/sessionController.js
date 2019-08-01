@@ -5,6 +5,7 @@ import { authorizeWithGithub } from '../utils/auth';
 export default {
     async githubAuth (req, res, next) {
         const code = req.headers.code;
+
         let {
             message,
             access_token,
@@ -26,7 +27,7 @@ export default {
             name,
             githubLogin: login,
             githubToken: access_token,
-            avatar: avatar_url
+            avatar_url: avatar_url
         }
 
         const result = await db.get()

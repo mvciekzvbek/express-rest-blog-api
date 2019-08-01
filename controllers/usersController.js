@@ -34,9 +34,9 @@ export default {
         }
 
         const articles = await db.get().collection('articles')
-        .find({"userID": id})
-        .sort({_id: -1})
-        .toArray()
+            .find({"author_name": user.githubLogin})
+            .sort({_id: -1})
+            .toArray()
 
         const userWithArtilces = {
             ...user,
@@ -57,7 +57,7 @@ export default {
             _id: id,
             githubLogin: r.login.username,
             name: `${r.name.first} ${r.name.last}`,
-            avatar: r.picture.thumbnail,
+            avatar_url: r.picture.thumbnail,
             githubToken: r.login.sha1
         }))
     

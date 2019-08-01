@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import authController from '../controllers/authController';
 import { catchAsync } from "../middlewares/middlewares";
+import sessionController from '../controllers/sessionController';
 
 const router = Router();
 
-router.post('/github', catchAsync(authController.githubAuth));
+router.post('/', catchAsync(sessionController.githubAuth));
 
 export default router;
