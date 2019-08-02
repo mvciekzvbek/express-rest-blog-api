@@ -5,9 +5,9 @@ import session from './session';
 import comments from './comments';
 
 export default {
-    articles,
-    users,
-    session,
-    categories,
-    comments
-}
+  articles,
+  users,
+  session,
+  categories,
+  comments,
+};

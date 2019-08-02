@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { catchAsync } from "../middlewares/middlewares";
+import { catchAsync } from '../middlewares/middlewares';
 import sessionController from '../controllers/sessionController';
 
 const router = Router();

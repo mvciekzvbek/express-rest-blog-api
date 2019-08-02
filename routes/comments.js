@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import commentsController from '../controllers/commentsController';
-import { catchAsync } from "../middlewares/middlewares";
+import { catchAsync } from '../middlewares/middlewares';
+
 const router = Router();
 
 router.get('/', catchAsync(commentsController.findAll));

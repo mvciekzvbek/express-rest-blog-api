@@ -1,9 +1,9 @@
 import db from '../utils/db';
 
 export function catchAsync(fn) {
-    return (req, res, next) => {
-        fn(req, res, next).catch(err => next(err));
-    }
+  return (req, res, next) => {
+    fn(req, res, next).catch(err => next(err));
+  };
 }
 
 // export function notFound(req, res, next) {
@@ -20,12 +20,12 @@ export function catchAsync(fn) {
 // }
 
 export async function isAuthenticated(req, res, next) {
-    const githubToken = req ? req.headers.token : '';
+  const githubToken = req ? req.headers.token : '';
 
-    const currentUser = await db.get()
-        .collection('users')
-        .findOne({githubToken});
+  const currentUser = await db.get()
+    .collection('users')
+    .findOne({ githubToken });
 
-    req.user = currentUser;
-    return next();
+  req.user = currentUser;
+  return next();
 }
