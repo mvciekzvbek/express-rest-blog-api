@@ -1,23 +1,29 @@
-version: "3"
+version: "3.5"
 services:
-  mongo:
-    image: mongo:latest
-    container_name: "mongo"
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - ./data/db:/data/db
+      - 'postgres:/var/lib/postgresql/data'
     ports:
-        - 27017:27017
+      - 5432:5432
   app:
-    image: "node:10"
-    container_name: express-rest
-    restart: always
-    build: .
-    working_dir: /home/node/app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: "react-rest-blog-api"
+    image: react-rest-blog-api
+    depends_on: 
+      - db
     volumes:
       - ./:/home/node/app
     environment:
       NODE_ENV: development
     ports:
       - 3000:3000
-      - 9229:9229
-    command: npm run dev
+
+volumes:
+  postgres:
