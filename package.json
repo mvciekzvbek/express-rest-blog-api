@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --fix",
-    "start": "node index.js",
-    "dev": "nodemon index.js --exec babel-node",
+    "start": "nodemon index.js --exec babel-node",
     "test": "mocha tests/*.spec.js --require @babel/register"
   },
   "repository": {
@@ -20,25 +19,24 @@
   },
   "homepage": "https://github.com/mvciekzvbek/express-rest#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.0.0",
-    "express": "^4.16.4",
-    "mongodb": "^3.2.3",
-    "node-fetch": "^2.5.0"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.2",
-    "mocha": "^6.2.0",
-    "nodemon": "^1.18.10",
+    "eslint-plugin-import": "^2.20.1",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4",
     "should": "^13.2.3",
-    "sinon": "^7.3.2",
+    "sinon": "^7.5.0",
     "supertest": "^4.0.2"
   }
 }
