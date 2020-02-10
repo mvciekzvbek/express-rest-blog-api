@@ -7,7 +7,7 @@ const router = Router();
 /**
  * Retrieves articles
  */
-router.get('/', isAuthenticated, catchAsync(articlesController.findAll));
+router.get('/', catchAsync(articlesController.findAll));
 
 /**
  * Creates new article

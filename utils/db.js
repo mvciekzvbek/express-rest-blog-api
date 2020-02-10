@@ -1,42 +1,8 @@
-import { MongoClient } from 'mongodb';
 import 'dotenv/config';
+import knex from 'knex';
+import knexfile from '../knexfile';
 
-let mongo;
+const env = process.env.NODE_ENV || 'development';
+const configOptions = knexfile[env];
 
-const connect = (host, callback) => {
-  MongoClient.connect(host, { useNewUrlParser: true }, (err, client) => {
-    if (err) {
-      console.log(`
-    
-                Mongo DB Host not found!
-                please add DB_HOST environment variable to .env file
-                exiting...
-    
-            `);
-      process.exit(1);
-    }
-
-    mongo = client.db();
-    callback();
-  });
-};
-
-const get = () => mongo;
-
-const close = () => mongo.close();
-
-const getNextSequence = async (name) => {
-  const ret = await mongo.collection('counters').findOneAndUpdate(
-    { _id: name },
-    { $inc: { seq: 1 } },
-    { returnOriginal: false },
-  );
-  return ret.value.seq;
-};
-
-export default {
-  connect,
-  get,
-  close,
-  getNextSequence,
-};
+export default knex(configOptions);
