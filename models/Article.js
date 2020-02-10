@@ -1,6 +1,8 @@
 export default class Article {
-  constructor ({id, title, lead, content, image_url, author_name, categories_ids}) {
-    this._id = id
+  constructor({
+    id, title, lead, content, image_url, author_name, categories_ids,
+  }) {
+    this._id = id;
     this.title = title;
     this.lead = lead;
     this.content = content;

@@ -4,9 +4,9 @@ import should from 'should';
 // import Article from '../models/Article'
 import request from 'supertest';
 import db from '../utils/db';
-import app from '../index'
+import app from '../index';
 
-process.env.ENV = 'Test'
+process.env.ENV = 'Test';
 
 const agent = request.agent(app);
 
@@ -17,8 +17,8 @@ describe('Article Crud Test', () => {
       lead: 'lead',
       content: 'content',
       image_url: 'url',
-      categories_ids: [1,2]
-    }
+      categories_ids: [1, 2],
+    };
 
     agent.post('/api/v1/articles')
       .send(article)
@@ -27,15 +27,15 @@ describe('Article Crud Test', () => {
         result.body.title.should.not.equal('title');
         results.body.should.have.property('_id');
         done();
-      })
-  })
+      });
+  });
 
   afterEach((done) => {
     done();
-  })
+  });
 
   after((done) => {
     db.close();
     done();
-  })
-})
+  });
+});

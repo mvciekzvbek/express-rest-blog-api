@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import db from '../utils/db';
 import { authorizeWithGithub } from '../utils/auth';
-import User from '../models/User'
+import User from '../models/User';
 
 export default {
   async githubAuth(req, res, next) {

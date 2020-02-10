@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "eslint . --fix",
     "start": "nodemon index.js --exec babel-node",
-    "test": "mocha tests/*.spec.js --require @babel/register"
+    "test": "mocha tests/*.spec.js --require @babel/register",
+    "knex:init": "./node_modules/.bin/knex init",
+    "knex:migrate": "./node_modules/.bin/knex migrate:latest"
   },
   "repository": {
     "type": "git",
@@ -23,7 +25,9 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "node-fetch": "^2.6.0"
+    "knex": "^0.20.8",
+    "node-fetch": "^2.6.0",
+    "pg": "^7.18.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
