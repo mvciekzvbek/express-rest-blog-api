@@ -8,7 +8,7 @@ module.exports = {
       user: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-    }
+    },
   },
   staging: {
     client: 'pg',
@@ -21,7 +21,7 @@ module.exports = {
     pool: {
       min: 2,
       max: 10,
-    }
+    },
   },
   production: {
     client: 'pg',
@@ -34,6 +34,6 @@ module.exports = {
     pool: {
       min: 2,
       max: 10,
-    }
+    },
   },
 };

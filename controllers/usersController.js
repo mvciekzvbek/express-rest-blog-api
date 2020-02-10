@@ -2,14 +2,12 @@ import fetch from 'node-fetch';
 import db from '../utils/db';
 import User from '../models/User';
 
-const hideTokens = (users) => users.map(el => {
-  return {
-    id: el._id,
-    githubLogin: el.githubLogin,
-    name: el.name,
-    avatar_url: el.avatar_url
-  }
-})
+const hideTokens = users => users.map(el => ({
+  id: el._id,
+  githubLogin: el.githubLogin,
+  name: el.name,
+  avatar_url: el.avatar_url,
+}));
 
 export default {
   async findAll(req, res, next) {
@@ -21,7 +19,7 @@ export default {
       .skip(offset)
       .limit(perPage)
       .sort({ _id: -1 })
-      .toArray()
+      .toArray();
 
     const countPromise = db.get().collection('users').countDocuments({});
 
@@ -83,7 +81,7 @@ export default {
   async update(req, res, next) {
     const id = parseInt(req.params.id, 10);
     if (req.body.token) {
-      delete req.body.token
+      delete req.body.token;
     }
     const newValues = { $set: req.body };
 
@@ -91,14 +89,13 @@ export default {
       .updateOne(
         { _id: id },
         newValues,
-        { upsert: false }
+        { upsert: false },
       );
 
     if (!updatedUser.matchedCount) {
-        return res.status(404).send({ message: 'Not Found' });
-    } else {
-      return res.sendStatus(200);
+      return res.status(404).send({ message: 'Not Found' });
     }
+    return res.sendStatus(200);
   },
 
   async remove(req, res, next) {
@@ -107,7 +104,7 @@ export default {
     if (!currentUser) {
       return res.sendStatus(401);
     }
-    
+
     const id = parseInt(req.params.id, 10);
 
     db.get().collection('users')

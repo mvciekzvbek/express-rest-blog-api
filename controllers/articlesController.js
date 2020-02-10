@@ -1,6 +1,6 @@
 import { prepareArticleFilter } from '../utils/filters';
 import db from '../utils/db';
-import Article from '../models/Article'
+import Article from '../models/Article';
 
 export default {
   // async create(req, res, next) {
@@ -43,7 +43,6 @@ export default {
   // },
 
   async findAll(req, res, next) {
-
     const articles = await db('articles')
       .select()
       .limit(5);
