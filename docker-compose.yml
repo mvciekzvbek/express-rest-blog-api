@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: "react-rest-blog-api"
+    container_name: "blog-api"
     image: react-rest-blog-api
     depends_on:
       - postgres

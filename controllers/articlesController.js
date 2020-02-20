@@ -1,4 +1,3 @@
-import { prepareArticleFilter } from '../utils/filters';
 import db from '../utils/db';
 import Article from '../models/Article';
 

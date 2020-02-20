@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import usersController from '../controllers/usersController';
-import { catchAsync } from '../middlewares/middlewares';
+import catchAsync from '../middlewares/catchAsync';
 
 const router = Router();
 
