@@ -1,52 +1,47 @@
-import db from '../utils/db';
+import db from '../db/index';
 import Article from '../models/Article';
 
 export default {
-  // async create(req, res, next) {
-  //   const currentUser = req.user;
-  //
-  //   if (!currentUser) {
-  //     return res.sendStatus(401);
-  //   }
-  //
-  //   if(!req.body.title) {
-  //     res.status(400)
-  //     return res.send('Title is required');
-  //   }
-  //
-  //   const id = await db.getNextSequence('articleid');
-  //   const categoriesNames = req.body.categories;
-  //   const categoriesIds = [];
-  //
-  //   for (const name of categoriesNames) {
-  //     const category = await db.get()
-  //       .collection('categories')
-  //       .findOne({ name });
-  //
-  //     categoriesIds.push(category._id);
-  //   }
-  //
-  //   let data = {
-  //     id,
-  //     ...req.body,
-  //     author_name: currentUser.githubLogin,
-  //     categories_ids: categoriesIds
-  //   }
-  //
-  //   const article = new Article(data);
-  //
-  //   const inserted = await db.get().collection('articles').insertOne(article);
-  //
-  //   res.status(201)
-  //   return res.send(inserted.ops[0]);
-  // },
+  async create (req, res, next) {
+    const {
+      user,
+      body,
+    } = req;
+
+    if (!user) {
+      return res.sendStatus(401);
+    }
+
+    // TODO:
+    // validate fields
+    // add categories
+    if (!body.title) {
+      res.status(400);
+      return res.send('Title is required');
+    }
+
+    const now = new Date();
+    const query = {
+      text: 'INSERT INTO articles(title, lead, body, image_url, created_at, modified_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      values: [body.title, body.lead, body.body, body.imageUrl, now, now],
+    };
+
+    const { rows } = await db.query(query);
+    return res.status(201).send(rows[0]);
+  },
 
   async findAll(req, res, next) {
-    const articles = await db('articles')
-      .select()
-      .limit(5);
+    // TODO
+    // queryparams - start, first, categories, author name, text
 
-    res.status(200).send(articles);
+    const query = {
+      text: 'SELECT * FROM articles ORDER BY id DESC OFFSET $1 FETCH FIRST $2 ROWS ONLY',
+      values: [0, 5],
+    };
+
+    const { rows } = await db.query(query);
+
+    return res.status(200).send(rows);
     // let { start, first } = req.query;
     //
     // start = parseInt(start, 10) || 0;
@@ -60,15 +55,6 @@ export default {
     //   .limit(first)
     //   .sort({ _id: -1 })
     //   .toArray();
-    //
-    // const countPromise = db.get().collection('articles').countDocuments(filter);
-    //
-    // const [articles, count] = await Promise.all([articlesPromise, countPromise]);
-    //
-    // if (!articles) {
-    //   return res.sendStatus(404);
-    // }
-    //
     // const returnArticles = articles.map((article) => {
     //   const newArticle = {...article};
     //   newArticle.links = {};

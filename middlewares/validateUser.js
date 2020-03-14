@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa';
 
@@ -19,23 +20,26 @@ const options = {
 };
 
 const validateUser = (req, res, next) => {
-  if (req.headers.authorization) {
-    const token = req.headers.authorization.split(' ');
-
-    return new Promise((resolve, reject) => {
-      jwt.verify(token[1], getKey, options, (err, decoded) => {
-        if (err) {
-          reject(err);
-          return res.sendStatus(401);
-        }
-        req.user = decoded[`${process.env.AUTH0_AUDIENCE}/email`];
-        resolve(decoded[`${process.env.AUTH0_AUDIENCE}/email`]);
-        next();
-      });
-    });
-  } else {
+  if (!req.headers.authorization) {
     return res.sendStatus(401);
   }
+
+  const token = req.headers.authorization.split(' ');
+
+  return new Promise((resolve, reject) => {
+    jwt.verify(token[1], getKey, options, (err, decoded) => {
+      if (err) {
+        reject(err);
+        return res.sendStatus(401);
+      }
+      req.user = {
+        email: decoded[`${process.env.AUTH0_AUDIENCE}/email`],
+      };
+      resolve(decoded[`${process.env.AUTH0_AUDIENCE}/email`]);
+      next();
+    });
+  });
+
 };
 
 export default validateUser;

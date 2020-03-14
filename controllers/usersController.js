@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import db from '../utils/db';
+import db from '../db/index';
 import User from '../models/User';
 
 const hideTokens = users => users.map(el => ({
