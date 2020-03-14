@@ -2,7 +2,7 @@ import db from '../db/index';
 import Article from '../models/Article';
 
 export default {
-  async create (req, res, next) {
+  async create(req, res, next) {
     const {
       user,
       body,

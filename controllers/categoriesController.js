@@ -1,8 +1,14 @@
-import fetch from 'node-fetch';
 import db from '../db/index';
 
 export default {
   async findAll(req, res, next) {
+    const query = {
+      text: 'SELECT * FROM categories',
+    };
+
+    const { rows } = await db.query(query);
+
+    return res.status(200).send(rows);
   },
 
   async findOne(req, res, next) {
