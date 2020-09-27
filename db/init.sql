@@ -1,7 +1,8 @@
 CREATE TABLE articles (
   id serial PRIMARY KEY,
   title varchar (355) NOT NULL,
-  content varchar NOT NULL,
+  lead varchar (355),
+  body varchar NOT NULL,
   image_url varchar,
   created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   modified_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
@@ -27,8 +28,6 @@ CREATE TABLE users (
   first_name VARCHAR (60),
   last_name VARCHAR (60)
 );
-
-ALTER TABLE users ALTER COLUMN password DROP NOT NULL
 
 CREATE TABLE articles_users (
   article_id INTEGER NOT NULL,
