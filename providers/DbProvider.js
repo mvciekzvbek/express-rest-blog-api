@@ -9,8 +9,4 @@ const pool = new Pool({
   port: process.env.POSTGRES_PORT,
 });
 
-const query = (text, params) => pool.query(text, params);
-
-export default {
-  query,
-};
+export default pool;

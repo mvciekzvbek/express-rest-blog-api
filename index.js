@@ -11,10 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // routes
-app.use('/api/v1/users', routes.users);
 app.use('/api/v1/articles', routes.articles);
 app.use('/api/v1/categories', routes.categories);
-app.use('/api/v1/comments', routes.comments);
 
 const server = app.listen(process.env.PORT || 3000, (err) => {
   if (err) {

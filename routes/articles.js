@@ -38,6 +38,10 @@ router.delete('/:id', validateUser, catchAsync(articlesController.remove));
 /**
  * Retrieves comments for given article
  */
-router.get('/:id/comments', validateUser, catchAsync(articlesController.findArticleComments));
+router.get(
+  '/:id/comments',
+  validateUser,
+  catchAsync(articlesController.findArticleComments),
+);
 
 export default router;

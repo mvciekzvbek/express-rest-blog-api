@@ -1,20 +1,25 @@
 module.exports = {
   env: {
-    node: true,
-    es6: true,
-    mocha: true
+    browser: true,
+    es2021: true,
   },
   extends: [
     'airbnb-base',
+    'prettier'
   ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 12,
     sourceType: 'module',
   },
   rules: {
+    'no-underscore-dangle': 0,
   },
+  overrides: [
+    {
+      files: ['*.test.js', '*.spec.js'],
+      rules: {
+        'no-unused-expressions': 'off',
+      },
+    },
+  ],
 };

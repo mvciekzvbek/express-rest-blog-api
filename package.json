@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --fix",
-    "start": "nodemon index.js --exec babel-node",
-    "test": "mocha tests/*.spec.js --require @babel/register"
+    "start": "nodemon index.js --exec babel-node"
   },
   "repository": {
     "type": "git",
@@ -26,21 +25,19 @@
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.7.0",
-    "node-fetch": "^2.6.0",
-    "pg": "^7.18.2"
+    "pg": "^8.3.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
-    "@babel/node": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.20.1",
-    "mocha": "^6.2.2",
-    "nodemon": "^1.19.4",
-    "should": "^13.2.3",
-    "sinon": "^7.5.0",
-    "supertest": "^4.0.2"
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.4",
+    "prettier": "2.1.2"
   }
 }
